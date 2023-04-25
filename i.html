@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>选中文本展示悬浮框</title>
+  <style>
+    #tooltip {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="tooltip"></div>
+  <p>
+    选中一些文本，悬浮框会在下方出现。
+  </p>
+  <script>
+    const tooltip = document.getElementById('tooltip');
+    let selection;
+
+    document.addEventListener('mouseup', function() {
+      selection = window.getSelection().toString();
+      if (selection) {
+        const range = window.getSelection().getRangeAt(0);
+        const boundingRect = range.getBoundingClientRect();
+        tooltip.textContent = selection;
+        tooltip.style.display = 'block';
+        tooltip.style.top = boundingRect.bottom + window.pageYOffset + 'px';
+        tooltip.style.left = boundingRect.left + window.pageXOffset + 'px';
+      } else {
+        tooltip.style.display = 'none';
+      }
+    });
+
+    // document.addEventListener('mousedown', function() {
+    //   tooltip.style.display = 'none';
+    // });
+  </script>
+</body>
+</html>
